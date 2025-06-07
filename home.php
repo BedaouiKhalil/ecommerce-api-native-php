@@ -11,7 +11,7 @@ $categories = getAllData("categories" , null , null , false )  ;
 
 $alldata['categories'] = $categories ; 
 
-$items = getAllData("item_view" , "item_discount != 0" , null , false )  ;
+$items = getAllData("items_view" , "item_discount != 0" , null , false )  ;
 
 $alldata['items'] = $items ; 
 
