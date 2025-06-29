@@ -5,11 +5,11 @@ include "../connect.php";
 $categoryId = filterRequest("categoryId");
 $userid = filterRequest("userId");
 
-$stmt = $con->prepare("SELECT items_view.* , 1 as favorite FROM items_view 
+$stmt = $con->prepare("SELECT items_view.* , 1 as favorite , (item_price - (item_price * item_discount / 100 ))  as item_price_discount FROM items_view 
 INNER JOIN favorites ON favorites.item_id = items_view.item_id AND favorites.user_id = $userid
 WHERE category_id = $categoryId
 UNION ALL 
-SELECT *  , 0 as favorite  FROM items_view
+SELECT *  , 0 as favorite , (item_price - (item_price * item_discount / 100 )) as item_price_discount FROM items_view
 WHERE  category_id = $categoryId AND item_id NOT IN  ( SELECT items_view.item_id FROM items_view 
 INNER JOIN favorites ON favorites.item_id = items_view.item_id AND favorites.user_id =  $userid  )");
 
